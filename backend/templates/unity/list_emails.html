@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <h1>{{ today|date:"F Y" }}</h1>
+    </div>
+    <div class="row">
+        <div class="col card m-2 p-3 bg-light">
+            <span class="row strongbg-info">Email List</span>
+            <h3 class="row">{{ email_list }}</h3>
+        </div>
+        <div class="col card m-2 p-3 bg-light">
+            <span class="row strong">New this month</span>
+            <h3 class="row">{{ new_this_month }}</h3>
+        </div>
+        <div class="col card m-2 p-3 bg-light">
+            <span class="row strong">Unsubscribed</span>
+            <h3 class="row">{{ unsubscribed }}</h3>
+        </div>
+    </div>
+    <div class="row p-3">
+        <table class="table table-bordered">
+            <tr>
+                <th>EMAIL ID</th>
+                <th>Timestamp</th>
+                <th>Status</th>
+            </tr>
+            {% for subscriber in subscribers %}
+                <tr>
+                    <td>{{ subscriber.email }}</td>
+                    <td>{{ subscriber.subscribed_at|timesince }}</td>
+                    <td>{% if subscriber.is_subscribed %}
+                            Subscribed
+                        {% else %}
+                            Unsubscribed
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock content %}
